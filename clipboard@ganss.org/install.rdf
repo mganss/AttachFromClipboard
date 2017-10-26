@@ -7,7 +7,7 @@
     <em:id>clipboard@ganss.org</em:id>
     <em:type>2</em:type>
     <em:name>Attach from Clipboard</em:name>
-    <em:version>1.0</em:version>
+    <em:version>1.0.1</em:version>
     <em:creator>Michael Ganss</em:creator>
     <em:iconURL>chrome://clipboard/skin/icon.svg</em:iconURL>
     <em:description>Create message attachments directly from the system clipboard.</em:description>
@@ -17,7 +17,7 @@
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
         <em:minVersion>22.*</em:minVersion>
-        <em:maxVersion>49.*</em:maxVersion>
+        <em:maxVersion>52.*</em:maxVersion>
       </Description>
     </em:targetApplication>
    
