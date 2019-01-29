@@ -15,7 +15,7 @@ var clipboardAttachment = (function () {
 
     function getOrderedFlavors() {
         var flavors = [];
-        
+
         switch (getPasteImageType()) {
             case 0:
                 flavors.push("image/jpeg");
@@ -40,6 +40,7 @@ var clipboardAttachment = (function () {
 
         flavors.push("application/x-moz-file");
         flavors.push("text/x-moz-url");
+        flavors.push("text/uri-list");
         flavors.push("text/html");
         flavors.push("text/unicode");
 
@@ -63,7 +64,25 @@ var clipboardAttachment = (function () {
 
         trans.getAnyTransferData(flavor, data, len);
 
-        return { flavor: flavor.value, data: data.value, length: len.value }; 
+        if (flavor.value === "text/uri-list") {
+            // if the flavor is text/uri-list, the data will be garbage
+            // (UTF-8 interpreted as UTF-16?), so we'll get the string again
+            // using text/unicode which works. 
+            // We'll still return text/uri-list as flavor, though, so the resulting
+            // string can be handled as a list of URIs.
+            trans = Cc["@mozilla.org/widget/transferable;1"].createInstance(Ci.nsITransferable);
+
+            trans.init(null);
+            trans.addDataFlavor("text/unicode");
+
+            Services.clipboard.getData(trans, Services.clipboard.kGlobalClipboard);
+
+            trans.getAnyTransferData(flavor, data, len);
+
+            return { flavor: "text/uri-list", data: data.value, length: len.value };
+        }
+
+        return { flavor: flavor.value, data: data.value, length: len.value };
     }
 
     function createFile(name) {
@@ -109,7 +128,7 @@ var clipboardAttachment = (function () {
             var clipboard = Services.clipboard;
             var flavors = getOrderedFlavors();
             var hasFlavors = clipboard.hasDataMatchingFlavors(flavors, flavors.length, clipboard.kGlobalClipboard);
-            return hasFlavors;            
+            return hasFlavors;
         },
         attachFromClipboard: function () {
             try {
@@ -136,6 +155,20 @@ var clipboardAttachment = (function () {
                         if (lines.length > 1) attachment.name = lines[1];
                         if (lines.length > 2) attachment.size = lines[2];
                         AddAttachments([attachment]);
+                    } else if (data.flavor === "text/uri-list") {
+                        var text = data.data.QueryInterface(Ci.nsISupportsString).data;
+                        var lines = text.split('\n');
+                        var attachments = [];
+                        for (i = 0; i < lines.length; i++) {
+                            var attachment = Cc["@mozilla.org/messengercompose/attachment;1"].createInstance(Ci.nsIMsgAttachment);
+                            var fileUri = lines[i];
+                            if (!fileUri.startsWith("file:///")) {
+                                fileUri = OS.Path.toFileURI(fileUri);
+                            }
+                            attachment.url = fileUri;
+                            attachments.push(attachment);
+                        }
+                        AddAttachments(attachments);
                     } else if (data.flavor === "text/unicode" || data.flavor === "text/plain") {
                         var text = data.data.QueryInterface(Ci.nsISupportsString).data;
                         writeString(data.data, "document.txt", function (file) {
@@ -149,7 +182,7 @@ var clipboardAttachment = (function () {
                 }
             } catch (ex) {
                 showException(ex);
-            }    
+            }
         },
         updateCommand: function () {
             var canAttach = my.canAttach();
@@ -167,7 +200,7 @@ var clipboardAttachment = (function () {
     window.addEventListener("load", function () {
         var menuEditPopup = document.getElementById("menu_EditPopup");
         menuEditPopup.addEventListener("popupshowing", my.updateCommand);
-        
+
         var msgComposeWindow = document.getElementById("msgcomposeWindow");
         msgComposeWindow.addEventListener("compose-window-close", unload);
         msgComposeWindow.addEventListener("compose-window-unload", unload);
@@ -175,4 +208,4 @@ var clipboardAttachment = (function () {
     window.addEventListener("unload", unload);
 
     return my;
-} ());
+}());
