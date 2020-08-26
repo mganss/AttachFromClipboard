@@ -25,7 +25,6 @@ function onLoad(activatedWhileWindowOpen) {
   <menupopup id="msgComposeAttachmentListContext">
     <menuitem id="msgComposeAttachmentListContext_attachClipboard" insertafter="attachmentListContext_attachPageItem"
       label="&attachFromClipboardContextMenu.label;" accesskey="&attachFromClipboard.accesskey;"
-      oncommand="clipboardAttachment.attachFromClipboard()"
       command="attachFromClipboardCmd" />
   </menupopup>`;
 
