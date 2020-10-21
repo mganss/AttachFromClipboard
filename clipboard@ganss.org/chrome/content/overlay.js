@@ -126,7 +126,7 @@ window.clipboardAttachment = (function () {
         canAttach: function () {
             var clipboard = window.Services.clipboard;
             var flavors = getOrderedFlavors();
-            var hasFlavors = clipboard.hasDataMatchingFlavors(flavors, flavors.length, clipboard.kGlobalClipboard);
+            var hasFlavors = clipboard.hasDataMatchingFlavors(flavors, clipboard.kGlobalClipboard);
             return hasFlavors;
         },
         attachFromClipboard: function () {
