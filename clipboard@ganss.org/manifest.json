@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Attach from Clipboard",
   "description": "Create message attachments directly from the system clipboard.",
-  "version": "1.78.0",
+  "version": "1.78.1",
   "author": "Michael Ganss",
   "homepage_url": "https://www.updatestar.com/dl/clipboard/clipboard.html",
   "applications": {
