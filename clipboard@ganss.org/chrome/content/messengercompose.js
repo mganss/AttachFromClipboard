@@ -1,6 +1,3 @@
-// Import any needed modules.
-var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
-
 function onLoad(activatedWhileWindowOpen) {
 
     let xul = `<commandset id="composeCommands">
