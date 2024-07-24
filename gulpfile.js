@@ -1,12 +1,13 @@
-'use script';
+'use strict';
 
-var gulp = require('gulp');
-var zip = require('gulp-zip');
+const gulp = require('gulp');
+const zip = require('gulp-zip');
 
-gulp.task('default', ['dist']);
-
-gulp.task('dist', function () {
+function dist() {
     return gulp.src('clipboard@ganss.org/**/*')
         .pipe(zip('clipboard.xpi'))
         .pipe(gulp.dest('.'));
-})
+}
+
+gulp.task('dist', dist);
+gulp.task('default', gulp.series('dist'));

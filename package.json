@@ -2,9 +2,8 @@
   "name": "clipboard-attachment",
   "version": "1.0.0",
   "description": "",
-  "dependencies": {},
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "^5.0.0",
     "gulp-zip": "^3.2.0"
   },
   "scripts": {
