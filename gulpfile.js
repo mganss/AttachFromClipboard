@@ -1,7 +1,5 @@
-'use strict';
-
-const gulp = require('gulp');
-const zip = require('gulp-zip');
+import gulp from 'gulp';
+import zip from 'gulp-zip';
 
 function dist() {
     return gulp.src('clipboard@ganss.org/**/*')
