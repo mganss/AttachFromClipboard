@@ -85,7 +85,7 @@ window.clipboardAttachment = (function () {
     }
 
     function createFile(name) {
-        var file = window.FileUtils.getFile("TmpD", [name]);
+        var file = new window.FileUtils.File(PathUtils.join(PathUtils.tempDir, name));
         file.createUnique(Ci.nsIFile.NORMAL_FILE_TYPE, window.FileUtils.PERMS_FILE);
         return file;
     }
@@ -103,10 +103,8 @@ window.clipboardAttachment = (function () {
     }
 
     function showException(ex) {
-        var promptService = Cc["@mozilla.org/embedcomp/prompt-service;1"].getService(Ci.nsIPromptService);
-        var title = WL.messenger.i18n.getMessage("errorTitle");
         var msg = WL.messenger.i18n.getMessage("errorMessage") + ": " + ex;
-        promptService.alert(window, title, msg);
+        window.alert(msg);
     }
 
     function addFileAttachment(file) {
