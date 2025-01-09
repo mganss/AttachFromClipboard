@@ -26,7 +26,7 @@ You can also download the add-on from its [detail page at Mozilla](https://addon
 ## Attach a screenshot (Windows)
 
 1. Press <kbd>PrtSc</kbd> (full desktop, <kbd>Alt+PrtSc</kbd> for active window only)
-2. Press <kbd>Ctrl+Alt+V</kbd> in compose message window in Thunderbird
+2. Press <kbd>Ctrl+Alt+Insert</kbd> in compose message window in Thunderbird
 
 ## Temporary files
 
