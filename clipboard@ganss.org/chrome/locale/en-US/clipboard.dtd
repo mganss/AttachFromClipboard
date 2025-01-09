@@ -1,3 +1,4 @@
 <!ENTITY attachFromClipboard.label "Attach from clipboard">
 <!ENTITY attachFromClipboard.accesskey "c">
 <!ENTITY attachFromClipboardContextMenu.label "Attach from clipboard">
+<!ENTITY attachFromClipboardAttachMenu.label "From clipboard">

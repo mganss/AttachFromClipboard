@@ -8,20 +8,21 @@ function onLoad(activatedWhileWindowOpen) {
   <keyset id="tasksKeys">
     <keyset id="attachFromClipboardKeys">
       <key id="attachFromClipboardKey" modifiers="control alt" key="v" command="attachFromClipboardCmd" />
+      <key id="attachFromClipboardKeyInsert" modifiers="control alt" keycode="VK_INSERT" command="attachFromClipboardCmd" />
     </keyset>
   </keyset>
   <menupopup id="button-attachPopup">
     <menuitem id="button-attachPopup_attachClipboard" insertafter="button-attachPopup_attachPageItem"
-      label="&attachFromClipboard.label;" accesskey="&attachFromClipboard.accesskey;"
+      label="&attachFromClipboardAttachMenu.label;" accesskey="&attachFromClipboard.accesskey;" key="attachFromClipboardKeyInsert"
       command="attachFromClipboardCmd" />
   </menupopup>
   <menupopup id="menu_EditPopup">
     <menuitem id="menu_Attach_Clipboard" insertafter="menu_pasteNoFormatting" label="&attachFromClipboard.label;" accesskey="&attachFromClipboard.accesskey;"
-      command="attachFromClipboardCmd" key="attachFromClipboardKey" position="4" />
+      command="attachFromClipboardCmd" key="attachFromClipboardKeyInsert" position="4" />
   </menupopup>
   <menupopup id="msgComposeAttachmentListContext">
     <menuitem id="msgComposeAttachmentListContext_attachClipboard" insertafter="attachmentListContext_attachPageItem"
-      label="&attachFromClipboardContextMenu.label;" accesskey="&attachFromClipboard.accesskey;"
+      label="&attachFromClipboardContextMenu.label;" accesskey="&attachFromClipboard.accesskey;" key="attachFromClipboardKeyInsert"
       command="attachFromClipboardCmd" />
   </menupopup>`;
 

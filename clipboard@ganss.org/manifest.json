@@ -2,14 +2,14 @@
   "manifest_version": 2,
   "name": "Attach from Clipboard",
   "description": "Create message attachments directly from the system clipboard.",
-  "version": "1.128.5",
+  "version": "1.128.6",
   "author": "Michael Ganss",
   "homepage_url": "https://www.updatestar.com/dl/clipboard/clipboard.html",
   "applications": {
     "gecko": {
       "id": "clipboard@ganss.org",
       "strict_min_version": "115.0",
-      "strict_max_version": "128.*"
+      "strict_max_version": "134.*"
     }
   },
   "icons": {

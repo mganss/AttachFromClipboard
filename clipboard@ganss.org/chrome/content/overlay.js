@@ -42,6 +42,7 @@ window.clipboardAttachment = (function () {
         flavors.push("text/uri-list");
         flavors.push("text/html");
         flavors.push("text/unicode");
+        flavors.push("text/plain");
 
         return flavors;
     }
@@ -92,16 +93,19 @@ window.clipboardAttachment = (function () {
 
     function writeString(data, name, callback) {
         var file = createFile(name);
-        var ostream = window.FileUtils.openSafeFileOutputStream(file);
-        var converter = Cc["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Ci.nsIScriptableUnicodeConverter);
-        converter.charset = "UTF-8";
-        var istream = converter.convertToInputStream(data);
-
-        window.NetUtil.asyncCopy(istream, ostream, function () {
-            callback(file);
-        });
+        var ostream = Cc["@mozilla.org/network/file-output-stream;1"]
+                        .createInstance(Ci.nsIFileOutputStream);
+        ostream.init(file, 0x02 | 0x08 | 0x20, 0o600, 0); // write, create, truncate
+    
+        var converter = Cc["@mozilla.org/intl/converter-output-stream;1"]
+                          .createInstance(Ci.nsIConverterOutputStream);
+        converter.init(ostream, "UTF-8", 0, 0);
+        converter.writeString(data);
+        converter.close();
+        ostream.close();
+        callback(file);
     }
-
+    
     function showException(ex) {
         var msg = WL.messenger.i18n.getMessage("errorMessage") + ": " + ex;
         window.alert(msg);
@@ -130,7 +134,6 @@ window.clipboardAttachment = (function () {
             try {
                 if (my.canAttach()) {
                     var data = getDataFromClipboard();
-
                     if (data.flavor.indexOf("image/") === 0) {
                         var extension = data.flavor === "image/png" ? "png" : (data.flavor === "image/gif" ? "gif" : "jpg");
                         var file = createFile("image." + extension);
@@ -140,7 +143,7 @@ window.clipboardAttachment = (function () {
                         });
                     } else if (data.flavor === "text/html") {
                         var html = data.data.QueryInterface(Ci.nsISupportsString).data;
-                        writeString(data.data, "document.html", function (file) {
+                        writeString(html, "document.html", function (file) {
                             addFileAttachment(file);
                         });
                     } else if (data.flavor === "text/x-moz-url") {
@@ -167,7 +170,7 @@ window.clipboardAttachment = (function () {
                         window.AddAttachments(attachments);
                     } else if (data.flavor === "text/unicode" || data.flavor === "text/plain") {
                         var text = data.data.QueryInterface(Ci.nsISupportsString).data;
-                        writeString(data.data, "document.txt", function (file) {
+                        writeString(text, "document.txt", function (file) {
                             addFileAttachment(file);
                         });
                     } else if (data.flavor === "application/x-moz-file") {
