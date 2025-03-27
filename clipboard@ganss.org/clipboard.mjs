@@ -50,7 +50,12 @@ export async function insertFromClipboard(tab) {
     for (let clipboardItem of clipboardItems) {
         let type = getPreferredType(clipboardItem.types);
         let blob = await clipboardItem.getType(type);
+
         const file = new File([blob], getFileName(type), { type });
+        if (file.size == 0) {
+            return;
+        }
+
         await browser.compose.addAttachment(tab.id, { file })
     }
 };
