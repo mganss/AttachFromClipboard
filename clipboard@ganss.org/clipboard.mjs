@@ -9,7 +9,6 @@ const FLAVOURS = [
 ].filter(ClipboardItem.supports)
 
 function getPreferredType(types) {
-
     let idx = types.map(t => FLAVOURS.indexOf(t)).sort()[0];
     if (idx == -1) {
         // None of the available types is in FLAVOURS, return the first available one.
