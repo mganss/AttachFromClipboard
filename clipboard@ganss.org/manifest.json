@@ -25,6 +25,9 @@
       "description": "__MSG_errorTitle__"
     }
   },
+  "options_ui": {
+    "page": "options/options.html"
+  },
   "experiment_apis": {
     "AttachMenu": {
       "schema": "api/AttachMenu/schema.json",
@@ -51,6 +54,7 @@
   "permissions": [
     "clipboardRead",
     "compose",
-    "menus"
+    "menus",
+    "storage"
   ]
 }

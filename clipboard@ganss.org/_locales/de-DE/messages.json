@@ -16,5 +16,11 @@
     },
     "errorTitle": {
         "message": "Einfügen aus Zwischenablage"
+    },
+    "preferred_image_format": {
+        "message": "Bevorzugtes Bildformat:"
+    },
+    "default_image_format": {
+        "message": "Standard"
     }
 }
