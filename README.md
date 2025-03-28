@@ -6,7 +6,6 @@ it easy to attach screenshots without a detour into a graphics program. Works fo
 The following media types are supported:
 
 * Images (png, jpg, gif), preferred format can be selected though option (defaults to png)
-* Files (e.g. by copying from Windows Explorer)
 * HTML (e.g. by copying from a browser)
 * Text
 * URLs
