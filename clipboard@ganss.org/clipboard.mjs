@@ -138,5 +138,6 @@ async function convertFileToType(file, type) {
 
     const dataUrl = canvas.toDataURL(type);
     const arrayBuffer = convertDataUrlToArrayBuffer(dataUrl);
+    URL.revokeObjectURL(objectURL);
     return new File([arrayBuffer], getFileName(type), { type });
 };
