@@ -4,5 +4,11 @@
     },
     "errorMessage": {
         "message": "Připojení přílohy ze schránky selhalo"
-    }
+    },
+    "preferred_image_format": {
+        "message": "Preferred image format:"
+    },
+    "default_image_format": {
+        "message": "Default"
+    }    
 }

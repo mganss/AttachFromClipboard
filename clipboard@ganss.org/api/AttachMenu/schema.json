@@ -1,0 +1,31 @@
+[
+  {
+    "namespace": "AttachMenu",
+    "functions": [
+      {
+        "name": "inject",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "name": "windowId",
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onClicked",
+        "type": "function",
+        "description": "Fires when the user clicks the extra entry in the composer's attach menu.",
+        "parameters": [
+          {
+            "$ref": "tabs.Tab",
+            "name": "tab"
+          }
+        ]
+      }
+    ]
+  }
+]

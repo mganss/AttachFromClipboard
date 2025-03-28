@@ -1,0 +1,26 @@
+{
+    "attachFromClipboard.accesskey": {
+        "message": "c"
+    },
+    "attachFromClipboard.label": {
+        "message": "Attach from clipboard"
+    },
+    "attachFromClipboardAttachMenu.label": {
+        "message": "From clipboard"
+    },
+    "attachFromClipboardContextMenu.label": {
+        "message": "Attach from clipboard"
+    },
+    "errorMessage": {
+        "message": "Failed to create attachment from the clipboard"
+    },
+    "errorTitle": {
+        "message": "Attach from Clipboard"
+    },
+    "preferred_image_format": {
+        "message": "Preferred image format:"
+    },
+    "default_image_format": {
+        "message": "Default"
+    }
+}

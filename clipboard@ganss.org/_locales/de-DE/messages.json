@@ -1,0 +1,26 @@
+{
+    "attachFromClipboard.accesskey": {
+        "message": "Z"
+    },
+    "attachFromClipboard.label": {
+        "message": "Aus Zwischenablage anfügen"
+    },
+    "attachFromClipboardAttachMenu.label": {
+        "message": "Aus Zwischenablage"
+    },
+    "attachFromClipboardContextMenu.label": {
+        "message": "Aus Zwischenablage anfügen"
+    },
+    "errorMessage": {
+        "message": "Fehler beim Einfügen aus der Zwischenablage"
+    },
+    "errorTitle": {
+        "message": "Einfügen aus Zwischenablage"
+    },
+    "preferred_image_format": {
+        "message": "Bevorzugtes Bildformat:"
+    },
+    "default_image_format": {
+        "message": "Standard"
+    }
+}

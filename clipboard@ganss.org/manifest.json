@@ -2,36 +2,59 @@
   "manifest_version": 2,
   "name": "Attach from Clipboard",
   "description": "Create message attachments directly from the system clipboard.",
-  "version": "1.128.6",
+  "version": "2",
   "author": "Michael Ganss",
   "homepage_url": "https://www.updatestar.com/dl/clipboard/clipboard.html",
   "applications": {
     "gecko": {
       "id": "clipboard@ganss.org",
-      "strict_min_version": "115.0",
-      "strict_max_version": "134.*"
+      "strict_min_version": "128.0",
+      "strict_max_version": "138.*"
     }
   },
   "icons": {
-    "32": "chrome/skin/icon.svg",
-    "48": "chrome/skin/icon.svg",
-    "96": "chrome/skin/icon.svg"
+    "32": "assets/icon.svg",
+    "48": "assets/icon.svg",
+    "96": "assets/icon.svg"
+  },
+  "commands": {
+    "insert_from_clipboard": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+I"
+      },
+      "description": "__MSG_errorTitle__"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html"
   },
   "experiment_apis": {
-    "WindowListener": {
-      "schema": "api/WindowListener/schema.json",
+    "AttachMenu": {
+      "schema": "api/AttachMenu/schema.json",
       "parent": {
-        "scopes": ["addon_parent"],
-        "paths": [["WindowListener"]],
-        "script": "api/WindowListener/implementation.js"
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "AttachMenu"
+          ]
+        ],
+        "script": "api/AttachMenu/implementation.js"
       }
     }
   },
   "background": {
+    "type": "module",
     "scripts": [
       "background.js"
     ]
   },
-  "default_locale": "en",
-  "permissions": ["clipboardRead"]
+  "default_locale": "en-US",
+  "permissions": [
+    "clipboardRead",
+    "compose",
+    "menus",
+    "storage"
+  ]
 }
