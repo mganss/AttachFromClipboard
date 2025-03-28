@@ -17,12 +17,11 @@ if (preferred_image_format) {
 }
 
 // Enable auto-save.
-preferred_image_format_element.addEventListener("change", e => {
-  console.log(e)
-  let v = e.target.value;
-  if (v == "default") {
+preferred_image_format_element.addEventListener("change", event => {
+  let value = event.target.value;
+  if (value == "default") {
     browser.storage.local.remove("preferred_image_format");
   } else {
-    browser.storage.local.set({ preferred_image_format: v });
+    browser.storage.local.set({ preferred_image_format: value });
   }
 })
