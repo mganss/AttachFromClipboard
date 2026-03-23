@@ -9,23 +9,24 @@ const TYPES = [
     "text/plain"
 ];
 
-function getFileName(type) {
+function getFileName(type, index = 1) {
+    const suffix = `_${index}`;
     switch (type) {
         case "image/png":
-            return "document.png";
+            return `document${suffix}.png`;
         case "image/jpeg":
         case "image/jpg":
-            return "document.jpg"
+            return `document${suffix}.jpg`;
         case "image/webp":
-            return "document.webp"
+            return `document${suffix}.webp`;
         case "image/gif":
-            return "document.gif"
+            return `document${suffix}.gif`;
         case "text/html":
-            return "document.html"
+            return `document${suffix}.html`;
         case "text/unicode":
         case "text/plain":
         default:
-            return "document.txt"
+            return `document${suffix}.txt`;
     }
 }
 
@@ -46,12 +47,14 @@ async function getPreferredImageType() {
 
 async function getPreferredSupportedType(types) {
     let flavours = await getSupportedTypes();
-    let idx = types.map(type => flavours.indexOf(type)).sort()[0];
-    if (idx == -1) {
+    let indices = types.map(type => flavours.indexOf(type)).filter(i => i !== -1);
+    if (indices.length === 0) {
         // None of the supported types is preferred, return the first supported one.
         return types[0];
     }
-    return flavours[idx];
+    // Use numeric sort to find the lowest (most preferred) index.
+    indices.sort((a, b) => a - b);
+    return flavours[indices[0]];
 }
 
 export async function insertFromClipboard(tab) {
@@ -66,26 +69,31 @@ export async function insertFromClipboard(tab) {
         return;
     }
 
+    // Start index at the number of already existing attachments so new
+    // filenames don't collide with attachments already in the message.
+    const existingAttachments = await browser.compose.listAttachments(tab.id);
+    let index = existingAttachments.length + 1;
     for (let clipboardItem of clipboardItems) {
         const preferredSupportedType = await getPreferredSupportedType(clipboardItem.types);
         const blob = await clipboardItem.getType(preferredSupportedType);
 
-        let file = new File([blob], getFileName(preferredSupportedType), {
+        let file = new File([blob], getFileName(preferredSupportedType, index), {
             type: preferredSupportedType
         });
         if (file.size == 0) {
-            return;
+            continue; // Skip empty items instead of aborting the whole loop.
         }
 
         // Check if the current file is an image and if it is not yet in the desired format.
         if (preferredSupportedType.startsWith("image/")) {
             const preferredImageType = await getPreferredImageType();
             if (preferredImageType && preferredImageType != preferredSupportedType) {
-                file = await convertFileToType(file, preferredImageType);
+                file = await convertFileToType(file, preferredImageType, index);
             }
         }
 
         await browser.compose.addAttachment(tab.id, { file });
+        index++;
     }
 };
 
@@ -123,7 +131,7 @@ async function loadImage(objectURL) {
     return done.promise;
 }
 
-async function convertFileToType(file, type) {
+async function convertFileToType(file, type, index = 0) {
     let objectURL = URL.createObjectURL(file)
     let image = await loadImage(objectURL);
 
@@ -139,5 +147,5 @@ async function convertFileToType(file, type) {
     const dataUrl = canvas.toDataURL(type);
     const arrayBuffer = convertDataUrlToArrayBuffer(dataUrl);
     URL.revokeObjectURL(objectURL);
-    return new File([arrayBuffer], getFileName(type), { type });
+    return new File([arrayBuffer], getFileName(type, index), { type });
 };
