@@ -1,3 +1,9 @@
+import {
+    buildUniqueName,
+    getExtension,
+    getFileNameSettings
+} from "./filenames.mjs";
+
 const TYPES = [
     "image/jpeg",
     "image/jpg",
@@ -8,27 +14,6 @@ const TYPES = [
     "text/unicode",
     "text/plain"
 ];
-
-function getFileName(type, index = 1) {
-    const suffix = `_${index}`;
-    switch (type) {
-        case "image/png":
-            return `document${suffix}.png`;
-        case "image/jpeg":
-        case "image/jpg":
-            return `document${suffix}.jpg`;
-        case "image/webp":
-            return `document${suffix}.webp`;
-        case "image/gif":
-            return `document${suffix}.gif`;
-        case "text/html":
-            return `document${suffix}.html`;
-        case "text/unicode":
-        case "text/plain":
-        default:
-            return `document${suffix}.txt`;
-    }
-}
 
 async function getSupportedTypes() {
     // Push the preferred type to the top and then filter the resulting array
@@ -69,31 +54,44 @@ export async function insertFromClipboard(tab) {
         return;
     }
 
-    // Start index at the number of already existing attachments so new
-    // filenames don't collide with attachments already in the message.
+    // Names of the attachments already in the message, so a generated name
+    // never collides with one that is still in use.
     const existingAttachments = await browser.compose.listAttachments(tab.id);
-    let index = existingAttachments.length + 1;
+    const takenNames = new Set(
+        existingAttachments.map(a => a.name).filter(Boolean).map(name => name.toLowerCase())
+    );
+    const { prefix, scheme } = await getFileNameSettings();
+    // One point in time for the whole batch keeps a multi item paste together.
+    const date = new Date();
+
     for (let clipboardItem of clipboardItems) {
         const preferredSupportedType = await getPreferredSupportedType(clipboardItem.types);
-        const blob = await clipboardItem.getType(preferredSupportedType);
-
-        let file = new File([blob], getFileName(preferredSupportedType, index), {
-            type: preferredSupportedType
-        });
-        if (file.size == 0) {
+        let blob = await clipboardItem.getType(preferredSupportedType);
+        if (blob.size == 0) {
             continue; // Skip empty items instead of aborting the whole loop.
         }
 
+        let type = preferredSupportedType;
         // Check if the current file is an image and if it is not yet in the desired format.
         if (preferredSupportedType.startsWith("image/")) {
             const preferredImageType = await getPreferredImageType();
             if (preferredImageType && preferredImageType != preferredSupportedType) {
-                file = await convertFileToType(file, preferredImageType, index);
+                blob = await convertBlobToType(blob, preferredImageType);
+                type = blob.type;
             }
         }
 
+        // Named only once the final type is known, so the name always matches
+        // the content and is only handed out after the conversion succeeded.
+        const file = new File([blob], buildUniqueName({
+            prefix,
+            scheme,
+            extension: getExtension(type),
+            takenNames,
+            date
+        }), { type });
+
         await browser.compose.addAttachment(tab.id, { file });
-        index++;
     }
 };
 
@@ -131,8 +129,8 @@ async function loadImage(objectURL) {
     return done.promise;
 }
 
-async function convertFileToType(file, type, index = 0) {
-    let objectURL = URL.createObjectURL(file)
+async function convertBlobToType(blob, type) {
+    let objectURL = URL.createObjectURL(blob)
     let image = await loadImage(objectURL);
 
     var canvas = document.createElement("canvas");
@@ -147,5 +145,5 @@ async function convertFileToType(file, type, index = 0) {
     const dataUrl = canvas.toDataURL(type);
     const arrayBuffer = convertDataUrlToArrayBuffer(dataUrl);
     URL.revokeObjectURL(objectURL);
-    return new File([arrayBuffer], getFileName(type, index), { type });
+    return new Blob([arrayBuffer], { type });
 };

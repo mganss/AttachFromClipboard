@@ -22,5 +22,20 @@
     },
     "default_image_format": {
         "message": "Default"
+    },
+    "filename_prefix": {
+        "message": "File name prefix:"
+    },
+    "filename_scheme": {
+        "message": "Numbering:"
+    },
+    "filename_scheme_counter": {
+        "message": "Numbered (1, 2, 3 …)"
+    },
+    "filename_scheme_timestamp": {
+        "message": "Date and time"
+    },
+    "filename_preview": {
+        "message": "Example:"
     }
 }
