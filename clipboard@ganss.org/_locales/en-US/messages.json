@@ -17,10 +17,40 @@
     "errorTitle": {
         "message": "Attach from Clipboard"
     },
-    "preferred_image_format": {
-        "message": "Preferred image format:"
+    "sectionImages": {
+        "message": "Images"
     },
-    "default_image_format": {
-        "message": "Default"
+    "imageFormat": {
+        "message": "Attach images as:"
+    },
+    "imageFormatHint": {
+        "message": "JPEG, WebP and AVIF are much smaller than PNG. WebP and AVIF keep transparency, JPEG replaces it with white."
+    },
+    "keepOriginalFormat": {
+        "message": "Keep clipboard format"
+    },
+    "unsupportedFormats": {
+        "message": "This Thunderbird build has no encoder for: $FORMATS$",
+        "placeholders": {
+            "formats": {
+                "content": "$1",
+                "example": "AVIF / AV1 (.avif)"
+            }
+        }
+    },
+    "imageQuality": {
+        "message": "Quality:"
+    },
+    "imageQualityHint": {
+        "message": "Lower values produce smaller files. 80–90 % is usually indistinguishable from the original for screenshots."
+    },
+    "maxDimension": {
+        "message": "Scale down to at most:"
+    },
+    "maxDimensionHint": {
+        "message": "Longest edge of the image. 0 attaches the image at its original size."
+    },
+    "pixels": {
+        "message": "px (0 = unlimited)"
     }
 }
