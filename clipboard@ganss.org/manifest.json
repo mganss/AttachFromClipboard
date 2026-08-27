@@ -9,7 +9,7 @@
     "gecko": {
       "id": "clipboard@ganss.org",
       "strict_min_version": "128.0",
-      "strict_max_version": "148.*"
+      "strict_max_version": "156.*"
     }
   },
   "icons": {
