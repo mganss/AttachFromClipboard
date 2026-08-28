@@ -20,6 +20,24 @@
     </select>
   </div>
 
+  <div style="font-size:small; margin-top:1em;">
+    <label for="filename_prefix" data-l10n-content="filename_prefix">12</label>
+    <input type="text" id="filename_prefix" maxlength="60" spellcheck="false">
+  </div>
+
+  <div style="font-size:small; margin-top:1em;">
+    <label for="filename_scheme" data-l10n-content="filename_scheme">12</label>
+    <select id="filename_scheme">
+      <option value="counter" data-l10n-label="filename_scheme_counter">
+      <option value="timestamp" data-l10n-label="filename_scheme_timestamp">
+    </select>
+  </div>
+
+  <div style="font-size:small; margin-top:1em;">
+    <span data-l10n-content="filename_preview">12</span>
+    <code id="filename_preview"></code>
+  </div>
+
 </body>
 
 </html>
