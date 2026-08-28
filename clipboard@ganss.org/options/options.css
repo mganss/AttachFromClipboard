@@ -1,0 +1,84 @@
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font: message-box;
+  font-size: 1em;
+  margin: 0;
+  padding: 0.5em 0.2em 1em;
+  max-width: 42em;
+}
+
+section {
+  margin-block-end: 1.4em;
+}
+
+h2 {
+  font-size: 1.05em;
+  font-weight: 600;
+  margin: 0 0 0.6em;
+  padding-block-end: 0.2em;
+  border-block-end: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-block: 0.45em;
+}
+
+.row > label:first-child {
+  flex: 0 0 14em;
+}
+
+select,
+input[type="text"],
+input[type="number"] {
+  min-width: 6em;
+}
+
+input[type="text"] {
+  min-width: 14em;
+}
+
+input[type="range"] {
+  flex: 1 1 12em;
+  max-width: 18em;
+}
+
+output {
+  min-width: 3.5em;
+  font-variant-numeric: tabular-nums;
+}
+
+.unit {
+  opacity: 0.8;
+}
+
+.hint {
+  margin: 0.15em 0 0.9em 14.5em;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.hint.warning {
+  opacity: 1;
+  color: #a6600a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hint.warning {
+    color: #f0bf6c;
+  }
+}
+
+code {
+  font-family: monospace;
+  unicode-bidi: plaintext;
+}
+
+[hidden] {
+  display: none !important;
+}

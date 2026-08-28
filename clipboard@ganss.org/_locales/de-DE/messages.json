@@ -17,10 +17,40 @@
     "errorTitle": {
         "message": "Einfügen aus Zwischenablage"
     },
-    "preferred_image_format": {
-        "message": "Bevorzugtes Bildformat:"
+    "sectionImages": {
+        "message": "Bilder"
     },
-    "default_image_format": {
-        "message": "Standard"
+    "imageFormat": {
+        "message": "Bilder anfügen als:"
+    },
+    "imageFormatHint": {
+        "message": "JPEG, WebP und AVIF sind deutlich kleiner als PNG. WebP und AVIF erhalten die Transparenz, JPEG ersetzt sie durch Weiß."
+    },
+    "keepOriginalFormat": {
+        "message": "Format der Zwischenablage beibehalten"
+    },
+    "unsupportedFormats": {
+        "message": "Diese Thunderbird-Version hat keinen Encoder für: $FORMATS$",
+        "placeholders": {
+            "formats": {
+                "content": "$1",
+                "example": "AVIF / AV1 (.avif)"
+            }
+        }
+    },
+    "imageQuality": {
+        "message": "Qualität:"
+    },
+    "imageQualityHint": {
+        "message": "Niedrigere Werte ergeben kleinere Dateien. 80–90 % sind bei Screenshots meist nicht vom Original zu unterscheiden."
+    },
+    "maxDimension": {
+        "message": "Verkleinern auf höchstens:"
+    },
+    "maxDimensionHint": {
+        "message": "Längste Kante des Bildes. 0 fügt das Bild in Originalgröße an."
+    },
+    "pixels": {
+        "message": "px (0 = unbegrenzt)"
     }
 }
